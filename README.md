@@ -67,3 +67,58 @@ Scalability: Each component of the stack can be scaled independently, providing 
 Performance: Non-blocking architecture of Node.js, efficient front-end updates with React's virtual DOM, and the powerful, flexible data management capabilities of MongoDB.
 
 ## Getting Started
+
+## Step1- Backend Configuration:
+### Update and upgrade Ubuntu
+```
+sudo apt update
+sudo apt upgarde
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/955aeb23-fb19-4e8f-973f-c34a50d2d02e)
+
+Get the location of Node.js software from Ubuntu repositories:
+```
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/564e2e1f-d8a5-4e80-8e4c-7a461e0b3f2e)
+
+### Install Node.js 
+```
+sudo apt-get install -y node.js
+```
+The command above installs both node.js and npm. NPM is a package manager for Node.
+Verify the installation with the command below:
+```
+node -v
+```
+OR
+```
+npm -v
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/214d17fe-21b5-47ee-a792-4e2c515198d9)
+
+### Application Code Setup
+Created a new directory for my TO-DO app:
+```
+mkdir Todo
+```
+verify with:
+```
+ls
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/0ea3aeff-39c8-439a-9b43-0e344a3e9108)
+
+Change directory into the new directory and use `npm init` to initialise your project so that a new file named package.json will be created:  
+```
+cd Todo
+```
+then
+```
+npm init
+```
+verify the the package.json file was created.
+```
+ls
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/bf2ef105-250a-4941-92a9-f6e36ab2f9d6)
+
