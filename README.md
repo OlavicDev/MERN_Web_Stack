@@ -122,3 +122,50 @@ ls
 ```
 ![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/bf2ef105-250a-4941-92a9-f6e36ab2f9d6)
 
+## Step2- Install ExpressJS
+ExpressJS is a framework for nodeJS. Therefore it simplifies developemt and abstracts a lot of low level details.
+
+### install using npm:
+```
+npm install express
+```
+then create a file "index.js" use `ls` to verify:
+```
+touch index.js
+ls
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/845cebfa-7702-46e3-87fe-7e0b5f0fa9c3)
+
+### Install dotenv module
+```
+npm install dotenv
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/e201a3fe-552e-4087-95f4-33939b879cc7)
+
+### Type the following code into the index.js 
+```
+vim index.js
+```
+type
+```
+const express = require('express');
+require('dotenv').config();
+
+const app = express();
+
+const port = process.env.PORT || 5000;
+
+app.use((reg, res, next) => {
+res.header("Access-Control-Allow-Origin", "\*");
+res.header("Access-Control-Allow-Headers". "Origin, X-Requested-With, Content-Type, Accept");
+next();
+});
+
+app.use((reg, res, next) => {
+res.send ('Welcome to Express');
+});
+
+app.listen(port, () => {
+console.log(`Server running on port ${port}`)
+});
+
