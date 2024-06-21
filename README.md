@@ -155,17 +155,89 @@ const app = express();
 
 const port = process.env.PORT || 5000;
 
-app.use((reg, res, next) => {
-res.header("Access-Control-Allow-Origin", "\*");
-res.header("Access-Control-Allow-Headers". "Origin, X-Requested-With, Content-Type, Accept");
-next();
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
 
-app.use((reg, res, next) => {
-res.send ('Welcome to Express');
+app.use((req, res, next) => {
+  res.send('Welcome to Express');
 });
 
 app.listen(port, () => {
-console.log(`Server running on port ${port}`)
+  console.log(`Server running on port ${port}`);
 });
 
+
+```
+you can use cat to check inside a file without opening it:
+```
+cat index.js
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/5cf45f64-31ae-486e-bfa2-5f84c9f262ef)
+
+### Start the server
+```
+node index.js
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/c75f3502-81a8-4412-8867-5130222a17e3)
+
+### Configure your ec2 instance to accept traffic over port 5000;
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/7a199b9a-4b0d-4bff-be6b-f52a8c53980a)
+
+Then open your brower and try http://18.234.210.235:5000
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/1a05619a-da7b-4606-8252-e57fe80f0f5a)
+
+## Routes
+The To-Do app should be able to 
+1. Create a new task
+2. Display list of all tasks
+3. Delete a completed task
+For each task we need to create a route that will define various endpoints that the To-Do app will depend on.
+
+### create a folder "routes":
+```
+mkdir routes
+```
+change directory to routes folder
+```
+cd routes
+```
+Create a file api.js
+```
+touch api.js
+```
+open the file:
+```
+vim api.js
+```
+copy and paste:
+```
+const express = require('express');
+const router = express.Router();
+
+router.get('/todos', (req, res, next) => {
+  // Add your GET /todos logic here
+  res.send('GET todos');
+});
+
+router.post('/todos', (req, res, next) => {
+  // Add your POST /todos logic here
+  res.send('POST todos');
+});
+
+router.delete('/todos/:id', (req, res, next) => {
+  // Add your DELETE /todos/:id logic here
+  res.send(`DELETE todo with id ${req.params.id}`);
+});
+
+module.exports = router;
+
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/e17f29c6-639a-4642-af70-cf86e6f7cdcd)
+
+## Models
+A model is at the heart of javascript based applications and it is what makes it interactive.
+The model is also used to define the database schema(blueprint)
+To install a schema and a model `mongoose` is to be installed first, which is a Node.js package that makes working with mongodb easier.
