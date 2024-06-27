@@ -318,3 +318,97 @@ module.exports = router;
 ```
 ![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/3ca8b230-f23e-42ec-90e3-e72b0aa7ef09)
 
+
+## MongoDB 
+
+MongoDB is a leading NoSQL database known for its flexibility, scalability, and high performance. Unlike traditional relational databases that use tables and rows, MongoDB stores data in JSON-like documents, which allows for a more flexible and dynamic data model. This schema-less design enables the storage of different types of data structures within the same collection.
+
+Key features of MongoDB include its ability to handle large volumes of data, support for horizontal scaling through sharding, and built-in replication for high availability. It also offers a rich query language, making it easier to perform complex data retrieval and manipulation operations.
+
+mLab is a popular cloud database service that provided managed MongoDB hosting. It is known for its ease of use, robust features, and support for developers looking to deploy and manage MongoDB databases without worrying about the underlying infrastructure. However, mLab was acquired by MongoDB Inc., and its services were integrated into MongoDB Atlas. we will sign up an account.
+
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/8a823db1-83e2-4e3d-b33a-82b5aff76ea7)
+
+### Create a cluster
+### allow access to the MongoDB from anywhere
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/15cce2e7-9fb0-487d-a0f8-009286be882a)
+
+Create a MonGo database and collection inside mLab:
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/d442f104-331c-4096-a624-f1b461f42b24)
+
+### Create a file in your todo dir .env and open it :
+```
+touch .env
+vim .env
+```
+### Add connection string to connect to MongoDB database
+```
+DB = ‘mongodb+srv://<username>:<password>@<network-address>/<dbname>?retryWrites=true&w=majority’
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/79ae51ba-ec3b-4244-85f7-3c81d631f789)
+
+### Update the index.js to reflect the use of .env so that Node.js can connect to the database.
+edit to this instead
+```
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const routes = require('./routes/api');
+const path = require('path');
+require('dotenv').config();
+
+const app = express();
+
+const port = process.env.PORT || 5000;
+
+// Connect to the database
+mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log(`Database connected successfully`))
+  .catch(err => console.log(err));
+
+// Since mongoose promise is deprecated, we override it with Node's promise
+mongoose.Promise = global.Promise;
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+app.use(bodyParser.json());
+
+app.use('/api', routes);
+
+app.use((err, req, res, next) => {
+  console.log(err);
+  next();
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/d8d53928-2c5a-4f14-acf9-8819ea951cc3)
+
+### start your sever 
+```
+node index.js
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/61cfa2da-353e-4d60-9531-b4b2081261b5)
+
+
+## Testing Backend Code without Frontent using RESTful API
+In this project will would use POSTMAN to test our API,
+### Create a Postman account 
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/0b86f4ec-3f15-438f-bd5e-9fd703076f05)
+
+## Create a POST request
+with hhtp://<publicIP>:5000/api/Todos
+
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/f0000b37-b408-467b-8f19-20d92de75491)
+
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/320c3e74-371e-4a73-9fa7-f980636227cd)
+
+
+
