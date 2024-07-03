@@ -403,11 +403,45 @@ In this project will would use POSTMAN to test our API,
 ### Create a Postman account 
 ![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/0b86f4ec-3f15-438f-bd5e-9fd703076f05)
 
-## Create a POST request
+### Create a POST request
 with hhtp://<publicIP>:5000/api/Todos
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/780de840-60d2-4046-b7e3-0af09d203c45)
 
+
+and a GET request
 ![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/99ac6803-ddad-4eb0-85f3-42405d8c67c3)
 
 
+## Frontend creation:
+in the same root directory as your backend code, which is the Todo directory run:
+```
+npx create-react-app client
+```
+This will creat a new folder in `Todo` directory
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/fc0e91b3-ff27-4c88-8cac-b0e6c3467a08)
 
+
+### Runing a React app 
+Before testing the some dependencies are needed 
+concurrentlty
+```
+npm install concurrently --save-dev
+```
+nodemon:
+```
+npm install nodemon --save-dev
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/7de49893-5240-460e-8598-6e24dc3e774c)
+
+in `Todo` folder open `package.json` file and modify it replacing the `scripts part with:
+```
+ "scripts": {
+    "start": "node index.js",
+    "start-watch": "nodemon.js",
+    "dev": "concurrently \"npm run start_watch\" \"cd client && npm start\""
+  },
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/fd5375ef-81b6-4f38-8ec6-c0a2c3c0bb8f)
+
+### confingure Proxy in `package.json` 
 
