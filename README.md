@@ -406,9 +406,8 @@ In this project will would use POSTMAN to test our API,
 ## Create a POST request
 with hhtp://<publicIP>:5000/api/Todos
 
-![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/f0000b37-b408-467b-8f19-20d92de75491)
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/99ac6803-ddad-4eb0-85f3-42405d8c67c3)
 
-![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/320c3e74-371e-4a73-9fa7-f980636227cd)
 
 
 
