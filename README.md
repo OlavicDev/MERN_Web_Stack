@@ -444,4 +444,23 @@ in `Todo` folder open `package.json` file and modify it replacing the `scripts p
 ![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/fd5375ef-81b6-4f38-8ec6-c0a2c3c0bb8f)
 
 ### confingure Proxy in `package.json` 
+change dir to client:
+```
+cd client
+```
+open `packeage file`
+```
+vim package.json
+```
+Add the key value pair in the package.json 
+```
+"proxy": "http://localhost:5000".
+```
+change directory back to the root directory and run 
+```
+npm run dev
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/029b2cc0-1020-4e12-b324-1f57596e5a9f)
+
+
 
