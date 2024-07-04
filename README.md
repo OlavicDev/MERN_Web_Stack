@@ -463,4 +463,316 @@ npm run dev
 ![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/029b2cc0-1020-4e12-b324-1f57596e5a9f)
 
 
+## Creating React components
+for this todo app, there would be two stateful components and one stateless component.
+from Todo dir go to client dir 
+move to `src` 
+```
+cd src
+```
+inside your `src` dir create another dir called `components` and  move into it 
+```
+mkdir components
+cd components
+```
+inside `components` dir create 3 files 
+```
+touch Input.js ListTodo.js Todo.js
+```
+
+Open `Input.js` file:
+```
+vim Input.js
+```
+write in the following 
+```
+import React, { Component } from 'react';
+import axios from 'axios';
+
+class Input extends Component {
+  state = {
+    action: ""
+  }
+
+  handleChange = (event) => {
+    this.setState({ action: event.target.value });
+  }
+
+  addTodo = () => {
+    const task = { action: this.state.action };
+
+    if (task.action && task.action.length > 0) {
+      axios.post('/api/todos', task)
+        .then(res => {
+          if (res.data) {
+            this.props.getTodos();
+            this.setState({ action: "" });
+          }
+        })
+        .catch(err => console.log(err));
+    } else {
+      console.log('Input field required');
+    }
+  }
+
+  render() {
+    let { action } = this.state;
+    return (
+      <div>
+        <input type="text" onChange={this.handleChange} value={action} />
+        <button onClick={this.addTodo}>add todo</button>
+      </div>
+    );
+  }
+}
+
+export default Input;
+```
+To use `Axios` you need to cd into your client from your terminal and run `yarn add axios` or `npm install axios`
+
+in the client dir run:
+```
+npm install axios
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/69799dc2-eaca-4641-863f-18a767742865)
+
+Go to components dir
+```
+cd src/components
+```
+Open your ListTodo and copy and paste this 
+```
+import React from 'react';
+
+const ListTodo = ({ todos, deleteTodo }) => {
+  return (
+    <ul>
+      {
+        todos && todos.length > 0 ? (
+          todos.map(todo => {
+            return (
+              <li key={todo._id} onClick={() => deleteTodo(todo._id)}>
+                {todo.action}
+              </li>
+            );
+          })
+        ) : (
+          <li>No todo(s) left</li>
+        )
+      }
+    </ul>
+  );
+}
+
+export default ListTodo;
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/e0c42f95-6a75-4261-bd2d-01c5b01782f7)
+
+Then open Todo.js and cpoy and paste this:
+```
+
+
+import React, { Component } from 'react';
+import axios from 'axios';
+
+import Input from './Input';
+import ListTodo from './ListTodo';
+
+class Todo extends Component {
+  state = {
+    todos: []
+  }
+
+  componentDidMount() {
+    this.getTodos();
+  }
+
+  getTodos = () => {
+    axios.get('/api/todos')
+      .then(res => {
+        if (res.data) {
+          this.setState({
+            todos: res.data
+          });
+        }
+      })
+      .catch(err => console.log(err));
+  }
+
+  deleteTodo = (id) => {
+    axios.delete(`/api/todos/${id}`)
+      .then(res => {
+        if (res.data) {
+          this.getTodos();
+        }
+      })
+      .catch(err => console.log(err));
+  }
+
+  render() {
+    let { todos } = this.state;
+    return (
+      <div>
+        <h1>My Todo(s)</h1>
+        <Input getTodos={this.getTodos} />
+        <ListTodo todos={todos} deleteTodo={this.deleteTodo} />
+      </div>
+    );
+  }
+}
+
+export default Todo;
+
+```
+we need to make adjust ment to our react code Delete logo and adjust App.js 
+```
+cd ..
+```
+```
+vim App.js
+```
+Copy and paste 
+```
+import React from 'react';
+import Todo from './components/Todo';
+import './App.css';
+
+const App = () => {
+  return (
+    <div className="App">
+      <Todo />
+    </div>
+  );
+}
+
+export default App;
+
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/44111958-4519-418c-8123-c7705504fca9)
+
+Then Open the App.css and paste this 
+
+```
+vim App.css
+```
+```
+.App {
+  text-align: center;
+  font-size: calc(10px + 2vmin);
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+input {
+  height: 40px;
+  width: 50%;
+  border: none;
+  border-bottom: 2px #101113 solid;
+  background: none;
+  font-size: 1.5rem;
+  color: #787a80;
+}
+
+input:focus {
+  outline: none;
+}
+
+button {
+  width: 25%;
+  height: 45px;
+  border: none;
+  margin-left: 10px;
+  font-size: 25px;
+  background: #101113;
+  border-radius: 5px;
+  color: #787a80;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: none;
+}
+
+ul {
+  list-style: none;
+  text-align: left;
+  padding: 15px;
+  background: #171a1f;
+  border-radius: 5px;
+}
+
+li {
+  padding: 15px;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  background: #282c34;
+  border-radius: 5px;
+  overflow-wrap: break-word;
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 300px) {
+  .App {
+    width: 80%;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 15px;
+    margin-left: 0;
+  }
+}
+
+@media only screen and (min-width: 640px) {
+  .App {
+    width: 60%;
+  }
+
+  input {
+    width: 50%;
+  }
+
+  button {
+    width: 30%;
+    margin-left: 10px;
+    margin-top: 0;
+  }
+}
+```
+![image](https://github.com/OlavicDev/MERN_Web_Stack/assets/124717753/e4f689d6-f711-44d4-8dbf-a92fafd261eb)
+
+Exit 
+In the same `src` dir
+```
+vim index.css
+```
+paste 
+```
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  background-color: #282c34;
+  color: #787a80;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+```
+Goto the Todo dir 
+then run
+```
+npm run dev
+```
+
+
 
